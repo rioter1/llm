@@ -57,3 +57,26 @@ attention_scores = attention_scores / tf.math.sqrt(embedding_dim)  # Scale by sq
 
 # Apply the softmax function to get attention weights
 attention_weights = tf.nn.softmax(attention_scores, axis=-1)
+
+# Assuming you have attention_weights and values (V) as computed in the previous example
+
+# Compute the context vectors
+context_vectors = tf.matmul(attention_weights, V)
+
+# Assuming you have context_vectors and an output layer
+
+# Generate predictions (e.g., the next word in a translation)
+# output_layer can be a linear or nonlinear activation layer
+
+predictions = output_layer(context_vectors)
+
+
+# Define the loss function
+loss_object = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+
+# Calculate the loss
+loss = loss_object(target_sequences, predictions)
+
+# Optionally, calculate the mean loss over all sequences in a batch
+mean_loss = tf.reduce_mean(loss)
+
