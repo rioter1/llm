@@ -50,3 +50,10 @@ K = tf.keras.layers.Dense(embedding_dim)(embedded_data)  # Keys
 V = tf.keras.layers.Dense(embedding_dim)(embedded_data)  # Values
 
 # Now, you have derived queries (Q), keys (K), and values (V) from the encoded data.
+
+# Calculate raw attention scores
+attention_scores = tf.matmul(Q, K, transpose_b=True)  # Dot product between Q and K
+attention_scores = attention_scores / tf.math.sqrt(embedding_dim)  # Scale by square root of the dimension
+
+# Apply the softmax function to get attention weights
+attention_weights = tf.nn.softmax(attention_scores, axis=-1)
