@@ -34,4 +34,22 @@ input = TE + PE
 forward pass output logits  
 when not training the model but only using it, put the model in eval model using model.eval()  
 
+encoding = string becomes a list of integers  
+these encoding are replicated num_return_sequence times(BATCH B)  
+therefore intial input becomes num_return_sequnces,token lentgh(TIME T)  
+
+1 more value needs to added to EVERY ROW i.e. 1 more additional column which are the logits  
+The logtis only at last columns are important, rest are thrown away  
+
+Here topk is 50, top 50 probabilities taken for tokens, rest made to 0  
+
+The columns in X(input) grow with every loop iteration i.e. with every loop iteration 1 logit clumn gets added  
+
+
+
+
+
+
+
+
 
