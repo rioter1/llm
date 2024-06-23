@@ -23,4 +23,13 @@ gelu always gives a local gradient in comparison to relu which makes it 0
 multi head = concatenated multiple heads of attention, uses a modulelist of multile head objects  
 
 each token emits 3 vectors (QKV)  
+number of token = 50257 = 50000 BPE merges + 256 bytes tokens +1 End of text   
+attn.bias is a buffer which is used for autoregressive mask hence it can be ignored when copying keys from the hugging face model to your own transformer model  
+
+input indices are always of shape (B,T) where B is batch dimension and we have the time dimension  
+therefore B independent sequences of T sequence length  
+position embedding (T, n_embed), positional embeddings are going to be identical for every single row and so there is broadcasting hidden inside any + operation with PE  
+token embedding  (B,T,n_embed)  
+input = TE + PE  
+
 
