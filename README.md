@@ -31,5 +31,7 @@ therefore B independent sequences of T sequence length
 position embedding (T, n_embed), positional embeddings are going to be identical for every single row and so there is broadcasting hidden inside any + operation with PE  
 token embedding  (B,T,n_embed)  
 input = TE + PE  
+forward pass output logits  
+when not training the model but only using it, put the model in eval model using model.eval()  
 
 
