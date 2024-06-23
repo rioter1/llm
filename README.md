@@ -17,3 +17,10 @@ A clean residual pathway helps propogate gradient back to the input
 it can have a pre normalization version or post, where 
 Residual pathways haveing normalizatio inside them is not good or desirable, gpt2 is a prenormalization version  
 mlp happens with every single token indivdually, there is no infrmation exchange between tokens whereas in attention, information is exchanged between the 1024 tokens  
+
+gelu non linearity is like relu but no flat tail at exactly 0  
+gelu always gives a local gradient in comparison to relu which makes it 0  
+multi head = concatenated multiple heads of attention, uses a modulelist of multile head objects  
+
+each token emits 3 vectors (QKV)  
+
