@@ -37,6 +37,7 @@ when not training the model but only using it, put the model in eval model using
 encoding = string becomes a list of integers  
 these encoding are replicated num_return_sequence times(BATCH B)  
 therefore intial input becomes num_return_sequnces,token lentgh(TIME T)  
+num_return_sequences = number of returned sequences you expect decoder to give for 1 input sentence  
 
 1 more value needs to added to EVERY ROW i.e. 1 more additional column which are the logits  
 The logtis only at last columns are important, rest are thrown away  
@@ -44,6 +45,16 @@ The logtis only at last columns are important, rest are thrown away
 Here topk is 50, top 50 probabilities taken for tokens, rest made to 0  
 
 The columns in X(input) grow with every loop iteration i.e. with every loop iteration 1 logit clumn gets added  
+
+----------------------------------------------------------------------
+
+
+Training  
+tiny shakespeare dataset is the best for debugging  
+
+gpt2 has a compression ratio of 3 to 1 so 1000 charachters are about 300 tokens  
+
+ 
 
 
 
