@@ -52,6 +52,9 @@ class CausalSelfAttention(nn.Module):
 
         if not self.flash:
             print("Warning: Using slow attention, flash attention avaliable with ptorch>2.0")
-
+            # here we register the buffer tensor of shape (1,1,block_size, block_size) as a parameter of 
+            # pytorch module. a buffer is a pytorch module that is not updated during the training process
+            # the name of he buffer here is "bias". the purpose of this buffer is attention masking
+            # which help the current token to not get infuned by future tokens
             self.register_buffer("bias", torch.tril(torch.ones(config.block_size, config.block_size))
                                         .view(1, 1, config.block_size, config.block_size))
