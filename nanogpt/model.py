@@ -17,7 +17,7 @@ class LayerNorm(nn.Module):
     with working with variable size matrices
 
     the weights and bias are needed to learn a more flexible affine transformation
-    rather than using the 
+    rather than using the raw normalized values
     
     """
     
@@ -37,4 +37,21 @@ class CausalSelfAttention(nn.Module):
         super().__init__()
         assert config.n_embd % config.n_embd == 0
 
-        # key, query, value 
+        # key, query, value projections for all heads but in a batch
+        self.c_attn = nn.Linear(config.n_embd, 3*config.n_embd, bias=config.bias)
+        # output projection
+        self.c_prof = nn.Linear(config.n_embd, config.n_embd, bias=config.bias)
+        # regularization
+        self.attn_dropout = nn.Dropout(config.dropout)
+        self.resid_dropout = nn.Dropout(config.dropout)
+        self.n_embd = config.n_head
+        self.n_embd = config.n_embd
+        self.dropout = config.dropout
+
+        self.flash = hasattr(torch.nn.functional, 'scaled_dot_product_attention')
+
+        if not self.flash:
+            print("Warning: Using slow attention, flash attention avaliable with ptorch>2.0")
+
+            self.register_buffer("bias", torch.tril(torch.ones(config.block_size, config.block_size))
+                                        .view(1, 1, config.block_size, config.block_size))
