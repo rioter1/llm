@@ -54,6 +54,13 @@ tiny shakespeare dataset is the best for debugging
 
 gpt2 has a compression ratio of 3 to 1 so 1000 charachters are about 300 tokens  
 
+----------------------------------------------------------------------
+
+Gradient accumulation: Instead of updating the model's weights after processing each individual batch of training data, the gradients are accumulated over multiple batches before updating.gradients are summed up over multiple batches rather than immediately incorporating the information from a single batch into the model's parameters  
+Once a certain number of batches have been processed, the accumulated gradients are used to update the model parameters using an optimization algorithm like SGD or Adam.  
+The effective batch size is the product of the actual batch size and the number of accumulation steps. For example, if the micro-batch size is 1 and gradient_accumulation_steps is 8, the effective batch size is 8.  
+1 batch_size * 32 grad_accum * 1024 tokens = 32,768 tokens/iter  
+
  
 
 

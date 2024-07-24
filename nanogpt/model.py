@@ -58,3 +58,23 @@ class CausalSelfAttention(nn.Module):
             # which help the current token to not get infuned by future tokens
             self.register_buffer("bias", torch.tril(torch.ones(config.block_size, config.block_size))
                                         .view(1, 1, config.block_size, config.block_size))
+            
+        
+    def forward(self, x):
+
+        B,T,C = x.size() # batch size, sequence length and embedded dimensionality
+
+        # The output of the linear layer is a single tensor with shape (batch_size, sequence_length, 3 * n_embd)
+        # split is happening along the dimension 2 i.e. the last dimension
+        # Sequence lenght of T is the number or token or the timesteps in the input sequence
+        # and C is the number of input features i.e. n_embd
+        q,k,v = self.c_attn(x).split(self.n_embd, dim=2)
+
+        # so if x is 32,10,128 dim tensor, the c_attn function will be applied along the last diemnsion
+        # i.e. n_embed and convert it to 3*n_embd
+        # the values in the B and T dimensions do not change, this is effectively a 
+        # last layer conversion op with x to 3x dimension conversion.
+        # this is just how the linear layer works, for a 2 dim, B, C it will only operate on the C dimension
+        # also it is NCHW or BCHW convention in torch
+
+        
