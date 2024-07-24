@@ -77,4 +77,32 @@ class CausalSelfAttention(nn.Module):
         # this is just how the linear layer works, for a 2 dim, B, C it will only operate on the C dimension
         # also it is NCHW or BCHW convention in torch
 
-        
+        k = k.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
+        q = q.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
+        v = v.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
+
+        # View function is used to reshape the tensor. 
+        # we do this for creating inputs for multiple input heads
+
+
+        # Calculate attention matrix (softmax(q.k(T)/sqrt(n_embd))).v
+        if self.flash:
+            # efficient attention using Flash Attention CUDA kernels
+            y = torch.nn.functional.scaled_dot_product_attention(q, k, v, attn_mask=None, dropout_p=self.dropout if self.training else 0, is_causal=True)
+        else:
+            # manual implementation of attention
+            att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1)))
+            att = att.masked_fill(self.bias[:,:,:T,:T] == 0, float('-inf'))
+            att = F.softmax(att, dim=-1)
+            att = self.attn_dropout(att)
+            y = att @ v # (B, nh, T, T) x (B, nh, T, hs) -> (B, nh, T, hs)
+        y = y.transpose(1, 2).contiguous().view(B, T, C) # re-assemble all head outputs side by side
+
+        # For each batch and each attention head, the attention scores tensor 
+        # att (shape (T, T)) is multiplied by the value tensor v (shape (T, hs)).
+
+
+
+        # output projection
+        y = self.resid_dropout(self.c_proj(y))
+        return y
