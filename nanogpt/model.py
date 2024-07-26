@@ -159,3 +159,58 @@ class GPTConfig:
 
 # dataclass is only used for storing data 
 # without defining any boiler plate code
+
+
+class GPT(nn.Module):
+
+    def __init__(self, config):
+        super().__init__()
+        assert config.vocab_size is not None
+        assert config.block_size is not None
+        self.config = config
+
+        self.transformer = nn.ModuleDict(dict(
+            wte = nn.Embedding(config.vocab_size, config.n_embd),
+            wpe = nn.Embedding(config.block_size, config.n_embd),
+            drop = nn.Dropout(config.dropout),
+            h = nn.ModuleList([Block(config) for _ in range(config.n_layer)]),
+            ln_f = LayerNorm(config.n_embd, bias=config.bias),
+        ))
+        # wte and wpe are token and positional embeddings
+        # Token embeddings are used to convert discrete 
+        # tokens (e.g., words, subwords, or characters) into dense vector representations.
+        # block size is the maximum length of the sequence or the timesteps needed to look forward
+        # vocab size is the max number of words present in the vocabulary
+        # ModuleDict allows you to easily access components by name, 
+        # while ModuleList allows you to iterate over layers or blocks
+
+
+        self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
+        
+        self.transformer.wte.weight = self.lm_head.weight 
+
+        # normal initialization fro weights and embedding and zero intialization for bias
+        self.apply(self._init_weights)
+        # apply special scaled init to the residual projections, per GPT-2 paper
+        # init all weights
+        # The apply method is a built-in method of nn.Module 
+        # in PyTorch. When you call self.apply(self._init_weights), 
+        # PyTorch automatically traverses all submodules (layers) 
+        # of the model and applies the provided function (_init_weights)
+        # to each of them.
+
+        # he named_parameters() method 
+        # returns an iterator over the model's parameters
+        for pn, p in self.named_parameters():
+            if pn.endswith('c_proj.weight'):
+                torch.nn.init.normal_(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+
+        # report number of parameters
+        print("number of parameters: %.2fM" % (self.get_num_params()/1e6,))
+
+        # This is a common technique to scale the initialization based on the number of layers, 
+        # which can help stabilize training.projection layers in transformers) may require a different scale of initialization to ensure effective learning.
+        # This is particularly relevant in deep networks, 
+        # where the depth can lead to issues like vanishing or 
+        # exploding gradients. Adjusting the initialization 
+        # for specific layers can help mitigate these issues.
