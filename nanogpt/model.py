@@ -214,3 +214,22 @@ class GPT(nn.Module):
         # where the depth can lead to issues like vanishing or 
         # exploding gradients. Adjusting the initialization 
         # for specific layers can help mitigate these issues.
+
+    def get_num_params(self, non_embedding=True):
+        # You can call self.parameters() on any subclass of 
+        # nn.Module, and it will provide 
+        # you with an iterator over all parameters in the model
+        n_params = sum(p.numel() for p in self.parameters())
+        if non_embedding:
+            # If non_embedding is true, the positional embedding is subtracted
+            n_params -= self.transformer.wpe.weight.numel()
+        return n_params
+    
+    
+    def _init_weights(self, module):
+        if isinstance(module, nn.Linear):
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
+            if module.bias is not None:
+                torch.nn.init.zeros_(module.bias)
+        elif isinstance(module, nn.Embedding):
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
