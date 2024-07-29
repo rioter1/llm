@@ -277,12 +277,18 @@ class GPT(nn.Module):
                 block.attn.bias = block.attn.bias[:,:,:block_size,:block_size]
 
 
+    # By defining from_pretrained as a class method, 
+    # you can create instances of the class using 
+    # different initialization strategies
+    # In this case, it allows you to create a
+    # model instance by loading pre-trained weights from a specific model type
     @classmethod
     def from_pretrained(cls, model_type, override_args=None):
         assert model_type in {'gpt2', 'gpt2-medium', 'gpt2-large', 'gpt2-xl'}
         override_args = override_args or {} # default to empty dict
         # only dropout can be overridden see more notes below
         assert all(k == 'dropout' for k in override_args)
+        # import the gpt2 hugging face model
         from transformers import GPT2LMHeadModel
         print("loading weights from pretrained gpt: %s" % model_type)
 
@@ -293,7 +299,12 @@ class GPT(nn.Module):
             'gpt2-large':   dict(n_layer=36, n_head=20, n_embd=1280), # 774M params
             'gpt2-xl':      dict(n_layer=48, n_head=25, n_embd=1600), # 1558M params
         }[model_type]
+        # the output of the config_args will be 1 key value pair
+
         print("forcing vocab_size=50257, block_size=1024, bias=True")
+
+        # context length is the number of previous tokens that the model
+        # considers when makin a prediciton for the next token
         config_args['vocab_size'] = 50257 # always 50257 for GPT model checkpoints
         config_args['block_size'] = 1024 # always 1024 for GPT model checkpoints
         config_args['bias'] = True # always True for GPT model checkpoints
@@ -302,6 +313,7 @@ class GPT(nn.Module):
             print(f"overriding dropout rate to {override_args['dropout']}")
             config_args['dropout'] = override_args['dropout']
         # create a from-scratch initialized minGPT model
+        # **config_args just provides keys of the dictionary as inputs
         config = GPTConfig(**config_args)
         model = GPT(config)
         sd = model.state_dict()
