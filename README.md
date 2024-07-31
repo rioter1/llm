@@ -61,13 +61,40 @@ Once a certain number of batches have been processed, the accumulated gradients 
 The effective batch size is the product of the actual batch size and the number of accumulation steps. For example, if the micro-batch size is 1 and gradient_accumulation_steps is 8, the effective batch size is 8.  
 1 batch_size * 32 grad_accum * 1024 tokens = 32,768 tokens/iter  
 
- 
+----------------------------------------------------
+How to calculae the number of parameters for a transformer model assuming only 1 transformer layer ?
+
+if the embedding size is d_model and the number of heads is n_heads, then the dimensions of each Q, K, and V weight matrix would typically be:
+d_model x d_k (k=key)
+d_model = n_embd (for example in our case 768)
+d_k = d_model/num_head (for 12 heads = 64)
+
+there for 3 q,k,v matrix per layer = 3x768x64
+Total weights for Q, K, V projections = (768 × 64 × 3) × 12 = 147,456
+
+The dimensions of the output projection matrix are: (d_model × d_model) = (768 × 768)
+589,824
+In addition to q,k,v matrices, each layer has 2 Feed forward networks with a relu activation inbetween, a layer normalization and a residual conncetion which does not have a weight but is part of the network
+
+The dimensions of the first linear layer are: (d_model × 4d_model) = (768 × 3072) = 2,359,296
+
+The dimensions of the second linear layer are: (4d_model × d_model) = (3072 × 768) = 2,359,296
+
+Total Weights = Attention Weights + Feedforward Weights
+= 737,280 + 4,718,592
+= 5,455,872
+
+Embedding Parameters=V×d_model
+For a vocabulary size of 50,304 and an embedding size of 768 768×50,304=38,707,712
+
+The output layer typically projects the hidden states back to the vocabulary size to produce logits for each token in the vocabulary​
+768×50,304=38,707,712
 
 
+Total Parameters=5,460,000+38,707,712+38,707,712 
+Approx 82 million
 
 
-
-
-
+so for gpt2 with 12 layers, we have 5.46x12 ~ 65 million + 76 million which comes out roughly 130-140 million
 
 
