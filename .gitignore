@@ -1,3 +1,4 @@
 /gpt
 /**/**/**/*.meta
 /**/**/**/*.bin
+/nanogpt/__pycache__
