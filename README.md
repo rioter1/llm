@@ -1,6 +1,8 @@
 To run training 
+
 ```
- python train.py config/train_shakespeare_char.py
+cd nanogpt
+python train.py config/train_shakespeare_char.py
 ```
 result: iter 5000: loss 0.8205, time 9107.82ms, mfu 24.47%
 
