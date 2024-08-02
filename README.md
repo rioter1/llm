@@ -6,6 +6,198 @@ python train.py config/train_shakespeare_char.py
 ```
 result: iter 5000: loss 0.8205, time 9107.82ms, mfu 24.47%
 
+Run
+```
+python sample.py --out_dir=out-shakespeare-char
+```
+OUTPUT
+
+'''
+
+ 
+Overriding: out_dir = out-shakespeare-char
+number of parameters: 10.65M
+Loading meta from data/shakespeare_char/meta.pkl...
+
+
+Clown:
+So, we will be longest
+back on the danger of a man again
+here that excused here? we thank ye away, what
+for a wizard with the toft, and that where it beg it
+extrement the sea, to be patient now.
+
+AUTOLYCUS:
+A ling of mine eye on him.
+
+AUTOLYCUS:
+Why, my lord, I am patiently to thy woe,
+And I am the one that is so it is, this a gentleman poor
+A shoulderer, benter for such a great whiteful as of the
+pedlar?
+
+Provost:
+This is a better:
+Are you he a propheciest to a save your tongue, your
+wi
+---------------
+
+Men pleasure, sirrah, I would have had not some noble two
+better to the subjects of the court.
+
+JULIET:
+I may say you love you so your executioner,
+Perhaps over-time to come the plaint; but it is
+Even to resign of your gracious prince,
+And with tears of the children to bless but what see you she
+Will deny of love? Privy, most doing,
+To be dull put on't. Let me throw the other undernoon
+In the boar of my hand with that will she were beloved on the king:
+So, for this time would have us your wife.
+
+---------------
+
+Messenger, but seal it, I would what have concernited
+As it does, withal.
+
+LEONTES:
+Me, my son,
+She shall be his body for his truth:
+Why, now he should goes his father, take the crown,
+As he and in his delaying self-sentenced brow not on him.
+
+HERMIONE:
+But you had been a herd of mine honour,
+Being constraction or our crown blood. Here's be your shame
+To be brief on his desire. For she was not caught
+With the common about men and her banished
+With meeties of the pity of our youth, and wholesome
+
+---------------
+
+
+FLORIZEL:
+He should they will give.
+
+RICHARD:
+What a scene but the seers where he were,
+But we were all ready of my Lord Norfolk,
+The townry of the royal blood,
+That I was that becomes his heirs, that which he I
+Am confined to the greatest gods; and, he cracks
+And I will not, would take my part. Go you as the ground,
+Who seems already like a sound fool. The valour of the queen,
+Cursed for most home, and sent my and to be gone;
+And see how for the winds of the golden king's course,
+And will be r
+---------------
+
+That lamb did thus this my forefaction light for this gold fash,
+To death upon their daughter not our hands.
+
+YORK:
+Good lord, lord, we will not be requited
+To this is gone crown of her breast.
+
+HASTINGS:
+A man of many hours it now,
+Where the one subjects of chamber'd them,
+To the soldiers, down and drinking when it shall were in his
+Than the dismissession shows my son, that the envious voices
+The hollow of Lancaster Catesby be a traitor,
+Too as dead, and who we will profess of their furthens,
+N
+---------------
+
+
+MENENIUS:
+Have been so the coming to her to grant in his son
+and honours his face, he was wings to my foes
+and shall be the wreath of my chamber.
+
+Messenger:
+Tell him what what think you his face?
+
+MENENIUS:
+The proceeding, how you have been are king, and for your
+noise the prayers, or your service, and with no more
+advised with city. You, till I be grocented with your virtue. So, if
+you do it be so, that you shall have good to myself, that
+the gentleman have been death to see a right world spi
+---------------
+
+She will be a gracious trages, and shall, when it is not to man
+to see me as the place of a shrone: yea, I know why,
+therefore thou know'st a drinken to right, I'll have of thee.
+
+BENVOLIO:
+I never saw the prince of the court.
+
+ROMEO:
+The sour shepherd hath been or no foot, says and
+beggar; within the fieldst world and make him worth.
+
+MERCUTIO:
+Indeed, rought with madness, I will have a custom of honour,
+to be colded by cushion and possession of the creets,--
+
+HERMIONE:
+Ay, so I have done, sir,
+---------------
+
+late that doth sit not for every mind; and therefore,
+I say the which I have rested the man
+And the bowels of my life and my noble loving
+What may be concluded again. Surped with this
+As it is so, when you shall have done you suspice
+And first him to your ears as say your honests
+Whereby here do our state, as the world were not!
+Here comes Romeo to Romeo him,
+And to Romeo come thee for hence this executioner!
+
+FRIAR LAURENCE:
+Peter! how now, much pain me with one so a wimad?
+
+BENVOLIO:
+Thou wilt
+---------------
+
+
+LEONTES:
+The Lord Antigonus is gracious servantment,
+Because content of vain service!
+The prisoners have done thee to slept the house;
+And if thou comest the forest be monstary,
+Which thou takest where? why, then I speak, if thou wouldst for
+Thine own with coal whom they have sing not.
+The very heavier is no honour'd, who does as if
+Thou gave me there such blood with their guilty hates.
+
+HASTINGS:
+Here comes Queen, our love, with money at haste.
+What will you distard your son Claudio?
+
+QUEEN EL
+---------------
+
+He hath not seen resolved himself and spoil,
+If I cannot give my knees from him.
+
+HENRY BOLINGBROKE:
+Come, come, go some, sir: by his trith
+Is this master than ever a woman's fear,
+And virtues her with his own life with his soul,
+And all in him with her services and fet
+And land-discontented upon her hate,
+And in his jewel and beget his despised by him,
+And hardless a lower sleeper, before him, and his shape
+To see him in his three hopeful sir.
+That comes the other hath ever common him
+To set hi
+---------------
+
+'''
+
 Notes on GPT(Karapthy)  
 
 GPT2 124M model  
