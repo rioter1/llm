@@ -12,7 +12,7 @@ python sample.py --out_dir=out-shakespeare-char
 ```
 OUTPUT
 
-'''
+```
 
  
 Overriding: out_dir = out-shakespeare-char
@@ -196,7 +196,7 @@ That comes the other hath ever common him
 To set hi
 ---------------
 
-'''
+```
 
 Notes on GPT(Karapthy)  
 
